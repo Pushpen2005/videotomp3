@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./index.css";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const [file, setFile] = useState(null);
@@ -19,7 +20,7 @@ function App() {
       let response;
 
       if (url) {
-        response = await axios.post("http://localhost:3001/api/urlupload", {
+        response = await axios.post(`${BASE_URL}/api/urlupload`, {
           url,
         });
       } else if (file) {
@@ -27,7 +28,7 @@ function App() {
         formData.append("video", file);
 
         response = await axios.post(
-          "http://localhost:3001/api/upload",
+          `${BASE_URL}/api/upload`,
           formData
         );
       }
@@ -46,7 +47,7 @@ function App() {
 
     try {
       const response = await axios.get(
-        `http://localhost:3001/api/download/${mp3}`,
+        `${BASE_URL}/api/download/${mp3}`,
         { responseType: "blob" }
       );
 
