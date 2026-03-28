@@ -1,7 +1,7 @@
 import ffmpeg from "fluent-ffmpeg";
 import ffmpegPath from "ffmpeg-static";
 import fs from "fs";
-
+ffmpeg.setFfmpegPath(ffmpegPath);
 
 export async function uploadFile(req, res) {
   try {
@@ -10,7 +10,9 @@ export async function uploadFile(req, res) {
     if (!file) {
       return res.status(400).json({ error: 'No file uploaded' });
     }
-
+if (!fs.existsSync("uploads")) {
+  fs.mkdirSync("uploads");
+}
     const fileName = `${file.filename}.mp3`;
     const outputPath = `uploads/${fileName}`;
 
